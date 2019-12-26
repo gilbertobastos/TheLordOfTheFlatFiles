@@ -1,7 +1,5 @@
 package br.com.gaob.ltff;
 
-import javax.print.DocFlavor;
-
 public class DelimiterSeparatedRowAssembler extends AbstractRowAssembler {
 
     /**
@@ -29,7 +27,7 @@ public class DelimiterSeparatedRowAssembler extends AbstractRowAssembler {
         for (Object obj: inputRowDataArray) {
 
             String formattedValue;
-            formattedValue = getFormatedValue(obj);
+            formattedValue = getFormattedValue(obj);
 
             boolean needEscapeChars;
             needEscapeChars = rowFormat.getEscapeSymbol() != null &&

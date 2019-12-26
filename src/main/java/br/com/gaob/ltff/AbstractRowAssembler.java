@@ -45,14 +45,14 @@ public abstract class AbstractRowAssembler {
      * @param object The object.
      * @return A string representation of the value of the object.
      */
-    private String getFormatedString(String object) { return object; }
+    private String getFormattedString(String object) { return object; }
 
     /**
      *
      * @param object The object.
      * @return A string representation of the value of the object.
      */
-    private String getFormatedInteger(Integer object) { return object.toString(); }
+    private String getFormattedInteger(Integer object) { return object.toString(); }
 
     /**
      *
@@ -68,14 +68,14 @@ public abstract class AbstractRowAssembler {
      * @param object The object.
      * @return A string representation of the value of the object.
      */
-    public String getFormatedValue(Object object) {
+    public String getFormattedValue(Object object) {
         switch (object.getClass().getSimpleName()) {
             case "Double":
                 return getFormattedDouble((Double) object);
             case "Integer":
-                return  getFormatedInteger((Integer) object);
+                return  getFormattedInteger((Integer) object);
             case "String":
-                return getFormatedString((String) object);
+                return getFormattedString((String) object);
         }
 
         return null;
