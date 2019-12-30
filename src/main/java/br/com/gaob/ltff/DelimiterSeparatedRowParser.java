@@ -1,5 +1,7 @@
 package br.com.gaob.ltff;
 
+import java.text.ParseException;
+
 public class DelimiterSeparatedRowParser extends AbstractRowParser {
 
     /**
@@ -16,14 +18,13 @@ public class DelimiterSeparatedRowParser extends AbstractRowParser {
      *
      * @param inputRowString The row string.
      * @param outputRowDataArray A array with "primitive-like" objects that will hold the values of row.
+     * @throws ParseException
      */
     @Override
-    public void parseRow(String inputRowString, Object[] outputRowDataArray) {
+    public void parseRow(String inputRowString, Object[] outputRowDataArray) throws ParseException {
 
         int inputRowStringPointer = 0;
         int outputRowDataArrayPointer = 0;
-        int nextDelimiterPointer = 0;
-
         DelimiterSeparatedValuesRowFormat rowFormat = (DelimiterSeparatedValuesRowFormat) this.getRowFormat();
 
         /* Parsing the row... */
@@ -37,7 +38,8 @@ public class DelimiterSeparatedRowParser extends AbstractRowParser {
 
             if (rowFormat.getEscapeSymbol() != null)
             {
-               escapedColumn =
+                /* Seeing if the start of the actual column has a escape symbol.. */
+                escapedColumn =
                        inputRowString.substring(
                                inputRowStringPointer,
                                inputRowStringPointer + rowFormat.getEscapeSymbol().length()).equals(rowFormat.getEscapeSymbol());
@@ -60,7 +62,8 @@ public class DelimiterSeparatedRowParser extends AbstractRowParser {
                             (inputRowString.indexOf(rowFormat.getDelimiterSymbol(), columnRawDataStartPos));
 
             rawColumnData = inputRowString.substring(columnRawDataStartPos, columnRawDataEndPos);
-            outputRowDataArray[outputRowDataArrayPointer++] = rawColumnData;
+            outputRowDataArray[outputRowDataArrayPointer] = this.getParsedValue(rawColumnData, this.getRowFormat().getColumnType(outputRowDataArrayPointer));
+            ++outputRowDataArrayPointer;
 
             inputRowStringPointer =
                     columnRawDataEndPos +

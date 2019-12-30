@@ -38,8 +38,9 @@ public abstract class AbstractRowParser {
      *
      * @param inputRowString The row string.
      * @param outputRowDataArray A array with "primitive-like" objects that holds the values of row.
+     * @throws ParseException If the parsing process fail.
      */
-    public abstract void parseRow(String inputRowString, Object[] outputRowDataArray);
+    public abstract void parseRow(String inputRowString, Object[] outputRowDataArray) throws ParseException;
 
     /**
      *
@@ -79,7 +80,8 @@ public abstract class AbstractRowParser {
      * @throws ParseException If the parsing process fail.
      */
     public Object getParsedValue(String value, Class columnType) throws ParseException {
-        switch (columnType.getClass().getSimpleName()) {
+
+        switch (columnType.getSimpleName()) {
             case "Double":
                 return getParsedDouble(value);
             case "Integer":
