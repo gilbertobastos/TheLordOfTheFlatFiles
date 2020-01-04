@@ -5,6 +5,8 @@ import br.com.gaob.ltff.rowFormats.AbstractRowFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public abstract class AbstractRowParser {
 
@@ -20,6 +22,11 @@ public abstract class AbstractRowParser {
     private AbstractRowFormat rowFormat;
 
     /**
+     * Date formatter.
+     */
+    private SimpleDateFormat simpleDateFormat;
+
+    /**
      *
      * @param rowFormat The "specification" of the row format.
      */
@@ -32,6 +39,10 @@ public abstract class AbstractRowParser {
         decimalFormat = new DecimalFormat();
         decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
         decimalFormat.setMaximumFractionDigits(rowFormat.getDecimalPlacesCount());
+
+        simpleDateFormat = (rowFormat.getSimpleDateFormatPattern() != null) ?
+                (new SimpleDateFormat(rowFormat.getSimpleDateFormatPattern())) :
+                (new SimpleDateFormat());
     }
 
     /**
@@ -77,6 +88,16 @@ public abstract class AbstractRowParser {
     /**
      *
      * @param value Value to be parsed.
+     * @return Parsed value wrapped in a object.
+     * @throws ParseException If the parsing process fail.
+     */
+    private Date getParsedDate(String value) throws ParseException {
+        return simpleDateFormat.parse(value);
+    }
+
+    /**
+     *
+     * @param value Value to be parsed.
      * @param columnType Parsed value wrapped in a object.
      * @return Parsed value wrapped in a object.
      * @throws ParseException If the parsing process fail.
@@ -90,6 +111,8 @@ public abstract class AbstractRowParser {
                 return  getParsedInteger(value);
             case "String":
                 return getParsedString(value);
+            case "Date":
+                return getParsedDate(value);
         }
 
         return null;

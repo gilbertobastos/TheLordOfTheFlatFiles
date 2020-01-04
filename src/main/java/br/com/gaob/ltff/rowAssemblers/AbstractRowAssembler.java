@@ -4,6 +4,8 @@ import br.com.gaob.ltff.rowFormats.AbstractRowFormat;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public abstract class AbstractRowAssembler {
 
@@ -12,6 +14,11 @@ public abstract class AbstractRowAssembler {
      */
     private DecimalFormatSymbols decimalFormatSymbols;
     private DecimalFormat decimalFormat;
+
+    /**
+     * Date formatter.
+     */
+    private SimpleDateFormat simpleDateFormat;
 
     /**
      * The "specification" of the row format.
@@ -32,6 +39,10 @@ public abstract class AbstractRowAssembler {
         decimalFormat = new DecimalFormat();
         decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
         decimalFormat.setMaximumFractionDigits(rowFormat.getDecimalPlacesCount());
+
+        simpleDateFormat = (rowFormat.getSimpleDateFormatPattern() != null) ?
+                (new SimpleDateFormat(rowFormat.getSimpleDateFormatPattern())) :
+                (new SimpleDateFormat());
     }
 
     /**
@@ -70,6 +81,13 @@ public abstract class AbstractRowAssembler {
      * @param object The object.
      * @return A string representation of the value of the object.
      */
+    private String getFormattedDate(Date object) { return simpleDateFormat.format(object); }
+
+    /**
+     *
+     * @param object The object.
+     * @return A string representation of the value of the object.
+     */
     public String getFormattedValue(Object object) {
         switch (object.getClass().getSimpleName()) {
             case "Double":
@@ -78,6 +96,8 @@ public abstract class AbstractRowAssembler {
                 return  getFormattedInteger((Integer) object);
             case "String":
                 return getFormattedString((String) object);
+            case "Date":
+                return getFormattedDate((Date) object);
         }
 
         return null;

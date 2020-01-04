@@ -1,5 +1,7 @@
 package br.com.gaob.ltff.rowFormats;
 
+import java.text.SimpleDateFormat;
+
 public class DelimiterSeparatedValuesRowFormat extends AbstractRowFormat {
 
     /**
@@ -21,16 +23,18 @@ public class DelimiterSeparatedValuesRowFormat extends AbstractRowFormat {
      * @param rowTerminatorSymbol Row terminator symbol.
      * @param decimalPointSymbol Decimal point symbol (use "null" if you don't want a decimal point in your numeric values).
      * @param decimalPlacesCount The count of decimal digits of a numeric value.
+     * @param simpleDateFormatPattern The pattern that will be used by the class {@link SimpleDateFormat} to parse/assemble date
+     *                                     values (use "null"  if you want to use the default patten for your locale).
      * @param delimiterSymbol A delimiter symbol (like a ";").
      * @param escapeSymbol A escape symbol do the delimiter symbol br "ignored".
      * @throws IllegalArgumentException If a class on the "columnsType" array doesn't be a "primitive-like" class.
      */
     public DelimiterSeparatedValuesRowFormat(
             Class[] columnsType, String rowTerminatorSymbol, char decimalPointSymbol,
-            int decimalPlacesCount, String delimiterSymbol, String escapeSymbol
+            int decimalPlacesCount, String simpleDateFormatPattern, String delimiterSymbol, String escapeSymbol
     )
     {
-        super(columnsType, rowTerminatorSymbol, decimalPointSymbol, decimalPlacesCount);
+        super(columnsType, rowTerminatorSymbol, decimalPointSymbol, simpleDateFormatPattern, decimalPlacesCount);
 
         this.delimiterSymbol = delimiterSymbol;
         this.escapeSymbol = escapeSymbol;
