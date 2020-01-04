@@ -1,4 +1,4 @@
-package br.com.gaob.ltff;
+package br.com.gaob.ltff.rowFormats;
 
 public class DelimiterSeparatedValuesRowFormat extends AbstractRowFormat {
 

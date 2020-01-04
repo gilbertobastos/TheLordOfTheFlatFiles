@@ -1,4 +1,6 @@
-package br.com.gaob.ltff;
+package br.com.gaob.ltff.rowAssemblers;
+
+import br.com.gaob.ltff.rowFormats.DelimiterSeparatedValuesRowFormat;
 
 public class DelimiterSeparatedRowAssembler extends AbstractRowAssembler {
 

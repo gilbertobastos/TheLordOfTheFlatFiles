@@ -1,4 +1,6 @@
-package br.com.gaob.ltff;
+package br.com.gaob.ltff.rowParsers;
+
+import br.com.gaob.ltff.rowFormats.DelimiterSeparatedValuesRowFormat;
 
 import java.text.ParseException;
 
@@ -45,17 +47,13 @@ public class DelimiterSeparatedRowParser extends AbstractRowParser {
                                inputRowStringPointer + rowFormat.getEscapeSymbol().length()).equals(rowFormat.getEscapeSymbol());
             }
 
-            /**
-             * Where the data of the actual column starts in the row string....
-             */
+            /* Where the data of the actual column starts in the row string.... */
             int columnRawDataStartPos =
                     (escapedColumn) ?
                             (inputRowStringPointer + rowFormat.getEscapeSymbol().length()) :
                             (inputRowStringPointer);
 
-            /**
-             * Where the data ends....
-             */
+            /* Where the data ends.... */
             int columnRawDataEndPos =
                     (escapedColumn) ?
                             (inputRowString.indexOf(rowFormat.getEscapeSymbol(), columnRawDataStartPos)) :

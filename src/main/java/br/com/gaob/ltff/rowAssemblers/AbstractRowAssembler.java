@@ -1,4 +1,6 @@
-package br.com.gaob.ltff;
+package br.com.gaob.ltff.rowAssemblers;
+
+import br.com.gaob.ltff.rowFormats.AbstractRowFormat;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
