@@ -26,25 +26,30 @@ public class DelimiterSeparatedRowAssembler extends AbstractRowAssembler {
         DelimiterSeparatedValuesRowFormat rowFormat = (DelimiterSeparatedValuesRowFormat) super.getRowFormat();
 
         /* Walking though the object collection to mount the row. */
-        for (Object obj: inputRowDataArray) {
+        for (int i = 0; i < inputRowDataArray.length; i++) {
+
+            Object obj = inputRowDataArray[i];
 
             String formattedValue;
             formattedValue = getFormattedValue(obj);
 
             boolean needEscapeChars;
             needEscapeChars = rowFormat.getEscapeSymbol() != null &&
-                    formattedValue.indexOf(rowFormat.getDelimiterSymbol()) != -1;
+                    formattedValue.contains(rowFormat.getDelimiterSymbol());
 
             if (needEscapeChars) {
-                stringBuilder.append(
-                        rowFormat.getEscapeSymbol() +
-                        formattedValue +
-                        rowFormat.getEscapeSymbol() +
-                        rowFormat.getDelimiterSymbol()
-                );
+                stringBuilder.append(rowFormat.getEscapeSymbol()).append(formattedValue).append(rowFormat.getEscapeSymbol());
             }
             else {
-                stringBuilder.append(formattedValue + rowFormat.getDelimiterSymbol());
+                stringBuilder.append(formattedValue);
+            }
+
+            /* If the i-th column is the last column from the row,
+                there will be no reason to put the delimiter symbol
+                on the end of the same.
+             */
+            if (i != inputRowDataArray.length - 1) {
+                stringBuilder.append(rowFormat.getDelimiterSymbol());
             }
         }
 

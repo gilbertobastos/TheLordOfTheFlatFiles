@@ -113,9 +113,9 @@ public abstract class AbstractRowParser {
                 return getParsedString(value);
             case "Date":
                 return getParsedDate(value);
+            default:
+                return null;
         }
-
-        return null;
     }
 
     /**

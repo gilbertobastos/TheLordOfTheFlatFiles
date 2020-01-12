@@ -20,7 +20,7 @@ public class DelimiterSeparatedRowParser extends AbstractRowParser {
      *
      * @param inputRowString The row string.
      * @param outputRowDataArray A array with "primitive-like" objects that will hold the values of row.
-     * @throws ParseException
+     * @throws ParseException If the parsing process fail.
      */
     @Override
     public void parseRow(String inputRowString, Object[] outputRowDataArray) throws ParseException {
@@ -59,8 +59,16 @@ public class DelimiterSeparatedRowParser extends AbstractRowParser {
                             (inputRowString.indexOf(rowFormat.getEscapeSymbol(), columnRawDataStartPos)) :
                             (inputRowString.indexOf(rowFormat.getDelimiterSymbol(), columnRawDataStartPos));
 
-            rawColumnData = inputRowString.substring(columnRawDataStartPos, columnRawDataEndPos);
-            outputRowDataArray[outputRowDataArrayPointer] = this.getParsedValue(rawColumnData, this.getRowFormat().getColumnType(outputRowDataArrayPointer));
+            /* If is the last column of the row (no delimiter on the end). */
+            if (columnRawDataEndPos == - 1) {
+                columnRawDataEndPos = inputRowString.length();
+            }
+
+            rawColumnData = inputRowString.substring(columnRawDataStartPos,columnRawDataEndPos);
+            
+            outputRowDataArray[outputRowDataArrayPointer] =
+                    this.getParsedValue(rawColumnData, this.getRowFormat().getColumnType(outputRowDataArrayPointer));
+
             ++outputRowDataArrayPointer;
 
             inputRowStringPointer =

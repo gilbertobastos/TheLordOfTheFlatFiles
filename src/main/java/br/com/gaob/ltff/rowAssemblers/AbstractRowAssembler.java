@@ -98,9 +98,9 @@ public abstract class AbstractRowAssembler {
                 return getFormattedString((String) object);
             case "Date":
                 return getFormattedDate((Date) object);
+            default:
+                return null;
         }
-
-        return null;
     }
 
     /**
