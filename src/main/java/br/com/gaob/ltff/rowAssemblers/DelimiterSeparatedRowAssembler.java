@@ -45,8 +45,8 @@ public class DelimiterSeparatedRowAssembler extends AbstractRowAssembler {
             }
 
             /* If the i-th column is the last column from the row,
-                there will be no reason to put the delimiter symbol
-                on the end of the same.
+               there will be no reason to put the delimiter symbol
+               on the end of the same.
              */
             if (i != inputRowDataArray.length - 1) {
                 stringBuilder.append(rowFormat.getDelimiterSymbol());

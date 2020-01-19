@@ -1,15 +1,13 @@
 package br.com.gaob.ltff.rowFormats;
 
 import java.util.Date;
-import java.text.SimpleDateFormat;
 
 public abstract class AbstractRowFormat {
 
     /**
-     *  The "primitive" type of the columns in the order
-     *  that they appear on the row.
+     * Array with the information about the columns.
      */
-    private Class[] columnsType;
+    private AbstractColumnFormat[] columnsFormat;
 
     /**
      *  The row-terminator symbol (character).
@@ -34,60 +32,46 @@ public abstract class AbstractRowFormat {
     private int decimalPlacesCount;
 
     /**
-     * The pattern that will be used by the class {@link SimpleDateFormat} to parse/assemble date values (use "null"
-     * if you want to use the default patten for your locale).
+     * The pattern that will be used to parse/assemble the date values.
      */
-    private String simpleDateFormatPattern;
+     private String datePattern;
 
     /**
      * Constructor...
      *
-     * @param columnsType A array with a collection of "primitive-like" types.
+     * @param columnsFormat Array with the information about the columns.
      * @param rowTerminatorSymbol Row terminator symbol.
      * @param decimalPointSymbol Decimal point symbol (use "null" if you don't want a decimal point in your numeric values).
      * @param decimalPlacesCount The count of decimal digits of a numeric value.
-     * @param simpleDateFormatPattern The pattern that will be used by the class {@link SimpleDateFormat} to parse/assemble date
-     *                                     values (use "null"  if you want to use the default patten for your locale).
-     * @throws IllegalArgumentException If a class on the "columnsType" array doesn't be a "primitive-like" class.
+     * @param datePattern The pattern that will be used to parse/assemble the date values.
      */
     public AbstractRowFormat(
-            Class[] columnsType,
+            AbstractColumnFormat[] columnsFormat,
             String rowTerminatorSymbol,
             char decimalPointSymbol,
-            String simpleDateFormatPattern,
+            String datePattern,
             int decimalPlacesCount)
     {
-        /* Verifying if the classes types of the array are "primitive-like" types. */
-        for (Class c: columnsType) {
-            if (
-                    !(c.equals(Double.class)) &&
-                    !(c.equals(Integer.class)) &&
-                    !(c.equals(String.class)) &&
-                    !(c.equals(Date.class))
-            )
-                throw new IllegalArgumentException();
-        }
-
-        this.columnsType = columnsType;
+        this.columnsFormat = columnsFormat;
         this.rowTerminatorSymbol = rowTerminatorSymbol;
         this.decimalPointSymbol = decimalPointSymbol;
         this.decimalPlacesCount = decimalPlacesCount;
-        this.simpleDateFormatPattern = simpleDateFormatPattern;
+        this.datePattern = datePattern;
     }
 
     /**
      *
      * @return Column count.
      */
-    public int getColumnCount() { return columnsType.length; }
+    public int getColumnCount() { return columnsFormat.length; }
 
     /**
      *
      * @param index The "number" (or position) of the column.
-     * @return A class.
+     * @return Column Format.
      */
-    public Class getColumnType(int index) {
-        return columnsType[index];
+    public AbstractColumnFormat getColumnFormat(int index) {
+        return columnsFormat[index];
     }
 
     /**
@@ -114,7 +98,7 @@ public abstract class AbstractRowFormat {
 
     /**
      *
-     * @return The pattern that will be used by the class {@link SimpleDateFormat} to parse/assemble date values.
+     * @return The pattern that will be used to parse/assemble the date values.
      */
-    public String getSimpleDateFormatPattern() {return simpleDateFormatPattern; }
+    public String getDatePattern() {return datePattern; }
 }

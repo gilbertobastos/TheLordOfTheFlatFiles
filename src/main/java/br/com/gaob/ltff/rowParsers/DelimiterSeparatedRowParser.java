@@ -67,7 +67,7 @@ public class DelimiterSeparatedRowParser extends AbstractRowParser {
             rawColumnData = inputRowString.substring(columnRawDataStartPos,columnRawDataEndPos);
             
             outputRowDataArray[outputRowDataArrayPointer] =
-                    this.getParsedValue(rawColumnData, this.getRowFormat().getColumnType(outputRowDataArrayPointer));
+                    this.getParsedValue(rawColumnData, this.getRowFormat().getColumnFormat(outputRowDataArrayPointer).getType());
 
             ++outputRowDataArrayPointer;
 

@@ -40,8 +40,8 @@ public abstract class AbstractRowParser {
         decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
         decimalFormat.setMaximumFractionDigits(rowFormat.getDecimalPlacesCount());
 
-        simpleDateFormat = (rowFormat.getSimpleDateFormatPattern() != null) ?
-                (new SimpleDateFormat(rowFormat.getSimpleDateFormatPattern())) :
+        simpleDateFormat = (rowFormat.getDatePattern() != null) ?
+                (new SimpleDateFormat(rowFormat.getDatePattern())) :
                 (new SimpleDateFormat());
     }
 
